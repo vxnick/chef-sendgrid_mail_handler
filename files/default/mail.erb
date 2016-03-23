@@ -1,0 +1,19 @@
+<p>Results of <strong><%= @status %></strong> Chef run on <em><%= @hostname %></em></p>
+
+<p><strong>Start time</strong>: <%= @run_status.start_time %></p>
+<p><strong>End time</strong>: <%= @run_status.end_time %></p>
+<p><strong>Elapsed time</strong>: <%= @run_status.elapsed_time %></p>
+
+<p><strong>Updated Resources:</strong></p>
+<ul>
+<% if @run_status.updated_resources -%>
+<% @run_status.updated_resources.each do |r| -%>
+   <li><%= r.to_s %></li>
+<% end -%>
+<% end -%>
+</ul>
+
+<p><% if @run_status.failed? -%>
+  <%= @run_status.formatted_exception %>
+  <%= Array(@run_status.backtrace).join('<br>') %>
+<% end -%></p>

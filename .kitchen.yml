@@ -1,0 +1,20 @@
+---
+driver:
+  name: vagrant
+  customize:
+    memory: 1024
+provisioner:
+  name: chef_solo
+
+platforms:
+- name: centos-6_chef-12-kitchen
+  driver_config:
+    box: sendgrid_centos-6_chef-12-kitchen
+    box_url: http://vagrantboxes.sendgrid.net/metadata/sendgrid_centos-6_chef-12-kitchen.json
+
+suites:
+- name: mail_handler
+  run_list:
+  - recipe[sendgrid_minitest-handler]
+  - recipe[sendgrid_mail_handler]
+  attributes: {}
