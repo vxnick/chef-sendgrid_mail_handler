@@ -23,11 +23,11 @@ chef_gem 'sendgrid-ruby'
 chef_handler 'SendGridMailHandler' do
   source "#{node['chef_handler']['handler_path']}/mail"
   arguments(
-    to_address: node['mail_handler']['to_address'],
-    from_address: node['mail_handler']['from_address'],
-    api_key: node['mail_handler']['api_key'],
-    send_statuses: node['mail_handler']['send_statuses'],
-    hostname: node['mail_handler']['hostname']
+    to_address: node['sendgrid_mail_handler']['to_address'],
+    from_address: node['sendgrid_mail_handler']['from_address'],
+    api_key: node['sendgrid_mail_handler']['api_key'],
+    send_statuses: node['sendgrid_mail_handler']['send_statuses'],
+    hostname: node['sendgrid_mail_handler']['hostname']
   )
   action :nothing
 end.run_action(:enable)
