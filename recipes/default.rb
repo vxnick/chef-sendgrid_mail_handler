@@ -1,0 +1,33 @@
+#
+# Cookbook Name:: sendgrid_mail_handler
+# Recipe:: default.rb
+#
+# Copyright (C) 2016 SendGrid
+#
+# All rights reserved - Do Not Redistribute
+#
+include_recipe 'chef_handler'
+
+cookbook_file "#{node['chef_handler']['handler_path']}/mail.rb" do
+  source 'mail.rb'
+  action :nothing
+end.run_action(:create)
+
+cookbook_file "#{node['chef_handler']['handler_path']}/mail.erb" do
+  source 'mail.erb'
+  action :nothing
+end.run_action(:create)
+
+chef_gem 'sendgrid-ruby'
+
+chef_handler 'MailHandler' do
+  source "#{node['chef_handler']['handler_path']}/mail"
+  arguments(
+    to_address: node['mail_handler']['to_address'],
+    from_address: node['mail_handler']['from_address'],
+    api_key: node['mail_handler']['api_key'],
+    send_statuses: node['mail_handler']['send_statuses'],
+    hostname: node['mail_handler']['hostname']
+  )
+  action :nothing
+end.run_action(:enable)
