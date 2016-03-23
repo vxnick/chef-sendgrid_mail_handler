@@ -4,7 +4,7 @@ require 'chef/handler'
 require 'erubis'
 require 'sendgrid-ruby'
 
-class MailHandler < Chef::Handler
+class SendGridMailHandler < Chef::Handler
   attr_reader :options
   def initialize(opts = {})
     @options = {
@@ -43,7 +43,7 @@ class MailHandler < Chef::Handler
       body = Erubis::Eruby.new(template).evaluate(context)
 
       # deliver the message using SendGrid API
-      client = SendGrid::Client.new(api_key: ENV['MONITREPORT_SG_API_KEY'])
+      client = SendGrid::Client.new(api_key: options[:api_key])
       mail = SendGrid::Mail.new do |m|
         m.to = options[:to_address]
         m.from = from_address
@@ -51,7 +51,7 @@ class MailHandler < Chef::Handler
         m.html = body
       end
 
-      puts 'Sending out the report...'
+      Chef::Log.info('Sending out the report...')
       res = client.send(mail)
       if res.code == 200
         Chef::Log.info('Mail has been successfully delivered.')

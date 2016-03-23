@@ -20,7 +20,7 @@ end.run_action(:create)
 
 chef_gem 'sendgrid-ruby'
 
-chef_handler 'MailHandler' do
+chef_handler 'SendGridMailHandler' do
   source "#{node['chef_handler']['handler_path']}/mail"
   arguments(
     to_address: node['mail_handler']['to_address'],

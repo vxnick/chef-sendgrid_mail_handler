@@ -17,8 +17,4 @@ suites:
   run_list:
   - recipe[sendgrid_minitest-handler]
   - recipe[sendgrid_mail_handler]
-  attributes: 
-    mail_handler:
-      to_address: richard@sendgrid.com
-      from_address: chef-client@sendgrid.com
-      api_key: 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
+  attributes: {}
