@@ -18,7 +18,9 @@ cookbook_file "#{node['chef_handler']['handler_path']}/mail.erb" do
   action :nothing
 end.run_action(:create)
 
-chef_gem 'sendgrid-ruby'
+chef_gem 'sendgrid-ruby' do
+  version '1.1.6' # newer versions require ruby 2.2.x, which chef 12.6.0 doesn't have
+end
 
 chef_handler 'SendGridMailHandler' do
   source "#{node['chef_handler']['handler_path']}/mail"
