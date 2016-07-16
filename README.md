@@ -9,7 +9,7 @@ Next, obtain your [SENDGRID_API_KEY](https://app.sendgrid.com/settings/api_keys)
 Include chef-sendgrid_mail_handler early in your Chef run list.
 
 Required attributes:
-* `node['mail_handler']['to_address']` = 'recipient@domain.com'
+* `node['mail_handler']['to_address']` = 'recipient@domain.com' or ['recipient1@domain.com', 'recipient2@domain.com', 'recipient3@domain.com']
 * `node['mail_handler']['api_key']` = 'SG.ApiKey'
 
 Optional attributes:
