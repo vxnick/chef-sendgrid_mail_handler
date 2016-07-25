@@ -22,6 +22,10 @@ chef_gem 'faraday' do
   version '~> 0.9.0'
 end
 
+chef_gem 'multipart-post' do
+  version '< 3, >= 1.2'
+end
+
 chef_gem 'sendgrid-ruby' do
   version '1.1.6' # newer versions require ruby 2.2.x, which chef 12.6.0 doesn't have
 end

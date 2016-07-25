@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 0.1.3
+- install multipart-post, dep for sendgrid-ruby that is not getting installed
+
 ## 0.1.2
 - install faraday alongside
 
