@@ -23,7 +23,7 @@ chef_gem 'faraday' do
 end
 
 chef_gem 'multipart-post' do
-  version '< 3, >= 1.2'
+  version '~> 2.0'
 end
 
 chef_gem 'sendgrid-ruby' do
