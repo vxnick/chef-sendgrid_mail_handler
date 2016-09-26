@@ -37,7 +37,8 @@ chef_handler 'SendGridMailHandler' do
     from_address: node['sendgrid_mail_handler']['from_address'],
     api_key: node['sendgrid_mail_handler']['api_key'],
     send_statuses: node['sendgrid_mail_handler']['send_statuses'],
-    hostname: node['sendgrid_mail_handler']['hostname']
+    hostname: node['sendgrid_mail_handler']['hostname'],
+    cooldown: node['sendgrid_mail_handler']['cooldown']
   )
   action :nothing
 end.run_action(:enable)

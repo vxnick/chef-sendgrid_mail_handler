@@ -1,4 +1,5 @@
 require 'rubygems'
+require 'fileutils'
 require 'chef'
 require 'chef/handler'
 require 'erubis'
@@ -13,7 +14,8 @@ class SendGridMailHandler < Chef::Handler
       api_key: 'SG.ApiKey',
       send_statuses: ['Successful', 'Failed'],
       template_path: File.join(File.dirname(__FILE__), 'mail.erb'),
-      hostname: 'localhost'
+      hostname: 'localhost',
+      cooldown: 0
     }
     @options.merge! opts
   end
@@ -21,6 +23,25 @@ class SendGridMailHandler < Chef::Handler
   def report
     status = success? ? 'Successful' : 'Failed'
     if options[:send_statuses].include? status
+      # Check if the cooldown has passed
+      cache_status = status.downcase
+      cache_file = "#{Chef::Config[:file_cache_path]}/last_#{cache_status}"
+
+      if File.exist? cache_file
+        cooldown_remaining = Time.now - File.mtime(cache_file)
+
+        if cooldown_remaining < options[:cooldown]
+          Chef::Log.info("Not sending report as cooldown is still in effect (#{cooldown_remaining} seconds remaining)")
+          return
+        end
+
+        # Update the cache file time
+        FileUtils.touch cache_file
+      else
+        # Create a new cache file
+        FileUtils.touch cache_file
+      end
+
       from_address = (options[:from_address] == 'chef-client') ? "#{options[:from_address]}@#{node.fqdn}" : options[:from_address]
       hostname = (options[:hostname] == 'localhost') ? node.fqdn : options[:hostname]
 
